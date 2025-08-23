@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tech Explorer Blog - Latest AI Insights & Reviews</title>
+    <meta name="description" content="Read the latest AI tool reviews, insights, and industry analysis from AI Tech Explorer. Stay ahead of the AI revolution.">
+    
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-neon: #00ff88;
+            --secondary-neon: #0066ff;
+            --accent-neon: #ff0066;
+            --bg-dark: #0a0a0f;
+            --bg-secondary: #1a1a2e;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+        }
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 100%);
+            color: var(--text-primary);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,255,136,0.2);
+            border-color: var(--primary-neon);
+        }
+        
+        .neon-button {
+            background: linear-gradient(45deg, var(--primary-neon), var(--secondary-neon));
+            border: none;
+            padding: 12px 32px;
+            border-radius: 50px;
+            color: #000;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .neon-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0,255,136,0.5);
+            color: #000;
+        }
+        
+        .badge-hot {
+            background: linear-gradient(45deg, #ff0066, #ff3366);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .badge-new {
+            background: linear-gradient(45deg, #0066ff, #3366ff);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .badge-trending {
+            background: linear-gradient(45deg, #00ff88, #33ff99);
+            color: #000;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .animated-gradient {
+            background: linear-gradient(-45deg, #00ff88, #0066ff, #ff0066, #00ff88);
+            background-size: 400% 400%;
+            animation: gradientShift 4s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .sticky-nav {
+            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 15, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .blog-card {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px rgba(0,255,136,0.3);
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 50px 16px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-neon);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .filter-tag {
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .filter-tag:hover, .filter-tag.active {
+            background: var(--primary-neon);
+            color: #000;
+            border-color: var(--primary-neon);
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 80px 20px 20px;
+        }
+
+        .mobile-menu.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .mobile-menu a {
+            color: white;
+            text-decoration: none;
+            font-size: 24px;
+            margin: 20px 0;
+            transition: color 0.3s ease;
+        }
+
+        .mobile-menu a:hover {
+            color: var(--primary-neon);
+        }
+
+        .mobile-menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(0,255,136,0.1) 0%, rgba(0,102,255,0.1) 50%, rgba(255,0,102,0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(0,255,136,0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0,102,255,0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255,0,102,0.2) 0%, transparent 50%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary-neon);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 255, 136, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
+        }
+
+        .featured-post {
+            background: linear-gradient(135deg, rgba(0,255,136,0.1) 0%, rgba(0,102,255,0.1) 100%);
+            border: 2px solid rgba(0,255,136,0.3);
+        }
+
+        .featured-post:hover {
+            border-color: var(--primary-neon);
+            box-shadow: 0 30px 60px rgba(0,255,136,0.4);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .pagination button {
+            padding: 10px 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pagination button:hover, .pagination button.active {
+            background: var(--primary-neon);
+            color: #000;
+            border-color: var(--primary-neon);
+        }
+
+        .pagination button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="mobile-menu-close" onclick="toggleMobileMenu()">
+            <i class="fas fa-times"></i>
+        </button>
+        <a href="index.html" onclick="toggleMobileMenu()">Home</a>
+        <a href="index.html#tools" onclick="toggleMobileMenu()">Tools</a>
+        <a href="index.html#reviews" onclick="toggleMobileMenu()">Reviews</a>
+        <a href="index.html#categories" onclick="toggleMobileMenu()">Categories</a>
+        <a href="blog.html" onclick="toggleMobileMenu()">Blog</a>
+        <a href="index.html#newsletter" onclick="toggleMobileMenu()">Newsletter</a>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 sticky-nav transition-all duration-300" id="navbar">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-2">
+                    <div class="w-10 h-10 rounded-full animated-gradient flex items-center justify-center">
+                        <i class="fas fa-robot text-black font-bold"></i>
+                    </div>
+                    <span class="text-xl font-bold">AI Tech Explorer</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="hover:text-green-400 transition-colors">Home</a>
+                    <a href="index.html#tools" class="hover:text-green-400 transition-colors">Tools</a>
+                    <a href="index.html#reviews" class="hover:text-green-400 transition-colors">Reviews</a>
+                    <a href="index.html#categories" class="hover:text-green-400 transition-colors">Categories</a>
+                    <a href="blog.html" class="text-green-400">Blog</a>
+                    <a href="index.html#newsletter" class="neon-button">Join 15K+ Pros</a>
+                </div>
+                <div class="md:hidden">
+                    <button class="text-white" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg pt-24 pb-16">
+        <div class="container mx-auto px-6">
+            <div class="text-center max-w-4xl mx-auto">
+                <div class="flex items-center justify-center mb-6">
+                    <div class="pulse-dot mr-3"></div>
+                    <span class="text-green-400 font-mono text-sm uppercase tracking-wide">AI Insights • Weekly Updates</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-black mb-6 leading-tight">
+                    AI Tech Explorer <span class="animated-gradient bg-clip-text text-transparent">Blog</span>
+                </h1>
+                <p class="text-xl text-gray-300 mb-8 leading-relaxed">
+                    Deep dives, honest reviews, and cutting-edge insights from the frontlines of AI innovation.
+                    <span class="text-green-400 font-semibold">No fluff, just facts.</span>
+                </p>
+
+                <!-- Search and Filter -->
+                <div class="search-container mb-8">
+                    <input 
+                        type="text" 
+                        placeholder="Search articles, tools, or topics..." 
+                        class="search-input"
+                        id="searchInput"
+                        onkeyup="filterPosts()"
+                    >
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+
+                <div class="filter-tags">
+                    <span class="filter-tag active" onclick="filterByCategory('all')">All Posts</span>
+                    <span class="filter-tag" onclick="filterByCategory('reviews')">Reviews</span>
+                    <span class="filter-tag" onclick="filterByCategory('comparisons')">Comparisons</span>
+                    <span class="filter-tag" onclick="filterByCategory('tutorials')">Tutorials</span>
+                    <span class="filter-tag" onclick="filterByCategory('news')">AI News</span>
+                    <span class="filter-tag" onclick="filterByCategory('budget')">Budget Tips</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Post -->
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-2xl font-bold mb-8 text-center">
+                    <span class="text-green-400">Featured</span> Article
+                </h2>
+                <article class="glass-card featured-post p-8 blog-card" onclick="openBlogPost('claude-vs-gpt4')">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-2/3">
+                            <div class="flex items-center gap-4 mb-4">
+                                <div class="badge-hot">Featured</div>
+                                <span class="text-sm text-gray-400">5 min read • Jan 15, 2025</span>
+                            </div>
+                            <h3 class="text-3xl font-bold mb-4 hover:text-green-400 transition-colors">
+                                Claude 4 vs GPT-4: The Ultimate Showdown
+                            </h3>
+                            <p class="text-gray-300 mb-6 text-lg leading-relaxed">
+                                I spent 40 hours testing both models across coding, reasoning, and creative tasks. The results will shock you. Claude 4 dominates in reasoning tasks with 98% accuracy, while GPT-4 excels in creative writing. Here's the complete breakdown...
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center">
+                                        <span class="text-sm font-bold">AC</span>
+                                    </div>
+                                    <div>
+                                        <div class="font-semibold">Alex Chen</div>
+                                        <div class="text-sm text-gray-400">AI Researcher & Reviewer</div>
+                                    </div>
+                                </div>
+                                <div class="text-green-400 text-xl">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="md:w-1/3">
+                            <div class="bg-gradient-to-br from-green-400 to-blue-500 rounded-lg p-6 text-center text-black">
+                                <i class="fas fa-brain text-4xl mb-4"></i>
+                                <h4 class="font-bold text-lg mb-2">AI Comparison</h4>
+                                <p class="text-sm">Comprehensive analysis of the latest language models</p>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Posts Grid -->
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl font-bold mb-12 text-center">
+                    Latest <span class="text-blue-400">Articles</span>
+                </h2>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="blogGrid">
+                    <!-- Blog posts will be dynamically inserted here -->
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination" id="pagination">
+                    <!-- Pagination buttons will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-20 bg-gradient-to-r from-green-900 to-blue-900 bg-opacity-50">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    Never Miss an <span class="text-green-400">Update</span>
+                </h2>
+                <p class="text-xl text-gray-300 mb-8">
+                    Get the latest AI insights delivered to your inbox every week.
+                </p>
+                <div class="glass-card p-8 max-w-2xl mx-auto">
+                    <form class="space-y-4" onsubmit="handleNewsletterSignup(event)">
+                        <input 
+                            type="email" 
+                            placeholder="Enter your email address" 
+                            class="w-full px-6 py-4 bg-gray-800 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-green-400 transition-colors"
+                            required
+                        >
+                        <button type="submit" class="neon-button w-full py-4 text-lg">
+                            <i class="fas fa-envelope mr-2"></i>
+                            Subscribe to Newsletter
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4">
+                        <div class="w-10 h-10 rounded-full animated-gradient flex items-center justify-center">
+                            <i class="fas fa-robot text-black font-bold"></i>
+                        </div>
+                        <span class="text-xl font-bold">AI Tech Explorer</span>
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        Your trusted source for AI tool reviews, insights, and industry updates.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-green-400 transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-blue-400 transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-pink-400 transition-colors">
+                            <i class="fab fa-youtube text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition-colors">
+                            <i class="fab fa-discord text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-bold mb-4">Categories</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Language Models</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Design AI</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Code AI</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Video AI</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Audio AI</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="font-bold mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="blog.html" class="text-gray-400 hover:text-white transition-colors">Blog Posts</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Tool Reviews</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Budget Alternatives</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Tutorials</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Comparisons</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="font-bold mb-4">Contact</h3>
+                    <ul class="space-y-2">
+                        <li><a href="mailto:hello@aitechexplorer.com" class="text-gray-400 hover:text-white transition-colors">hello@aitechexplorer.com</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Media Kit</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Partnerships</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Advertise</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 pt-8 text-center">
+                <p class="text-gray-400">
+                    © 2025 AI Tech Explorer. Made with <span class="text-red-400">♥</span> for the AI community.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Blog posts data
+        const blogPosts = [
+            {
+                id: 'claude-vs-gpt4',
+                title: 'Claude 4 vs GPT-4: The Ultimate Showdown',
+                excerpt: 'I spent 40 hours testing both models across coding, reasoning, and creative tasks. Here\'s what shocked me...',
+                category: 'comparisons',
+                badge: 'Latest',
+                badgeClass: 'badge-new',
+                readTime: '5 min read',
+                date: 'Jan 15, 2025',
+                author: 'Alex Chen',
+                featured: true
+            },
+            {
+                id: 'budget-ai-alternatives',
+                title: 'Budget AI Alternatives That Actually Work',
+                excerpt: 'You don\'t need to spend $500/month on AI tools. Here are 10 budget alternatives that deliver 90% of the value...',
+                category: 'budget',
+                badge: 'Trending',
+                badgeClass: 'badge-hot',
+                readTime: '8 min read',
+                date: 'Jan 12, 2025',
+                author: 'Alex Chen'
+            },
+            {
+                id: 'sora-vs-runway',
+                title: 'Sora vs RunwayML: Video AI Battle',
+                excerpt: 'OpenAI just dropped Sora. I\'m putting it head-to-head with RunwayML across 20 different video generation tasks...',
+                category: 'comparisons',
+                badge: 'Coming Soon',
+                badgeClass: 'badge-trending',
+                readTime: 'Preview',
+                date: 'Jan 18, 2025',
+                author: 'Alex Chen'
+            },
+            {
+                id: 'cursor-ai-review',
+                title: 'Cursor AI: Is It Worth the $2.6B Valuation?',
+                excerpt: 'The fastest-growing AI-native IDE just raised at a massive valuation. I tested it for 2 weeks straight...',
+                category: 'reviews',
+                badge: 'Deep Dive',
+                badgeClass: 'badge-new',
+                readTime: '12 min read',
+                date: 'Jan 10, 2025',
+                author: 'Alex Chen'
+            },
+            {
+                id: 'ai-coding-workflow',
+                title: 'My Complete AI-Powered Coding Workflow',
+                excerpt: 'How I use Claude, Cursor, and GitHub Copilot together to code 10x faster. Complete setup guide included...',
+                category: 'tutorials',
+                badge: 'Tutorial',
+                badgeClass: 'badge-trending',
+                readTime: '15 min read',
+                date: 'Jan 8, 2025',
+                author: 'Alex Chen'
+            },
+            {
+                id: 'gemini-2-flash-review',
+                title: 'Gemini 2 Flash: Speed vs Quality Analysis',
+                excerpt: 'Google\'s new model promises sub-second responses. But does speed come at the cost of quality? My findings...',
+                category: 'reviews',
+                badge: 'Analysis',
+                badgeClass: 'badge-new',
+                readTime: '7 min read',
+                date: 'Jan 5, 2025',
+                author: 'Alex Chen'
+            },
+            {
+                id: 'ai-news-january',
+                title: 'AI News Roundup: January 2025',
+                excerpt: 'The biggest AI announcements, funding rounds, and breakthroughs from this month. Everything you need to know...',
+                category: 'news',
+                badge: 'Monthly',
+                badgeClass: 'badge-hot',
+                readTime: '10 min read',
+                date: 'Jan 3, 2025',
+                author: 'Alex Chen'
+            },
+            {
+                id: 'free-ai-tools-2025',
+                title: '25 Free AI Tools That Don\'t Suck',
+                excerpt: 'Tired of expensive AI subscriptions? Here are 25 completely free tools that actually deliver professional results...',
+                category: 'budget',
+                badge: 'Free Guide',
+                badgeClass: 'badge-trending',
+                readTime: '20 min read',
+                date: 'Jan 1, 2025',
+                author: 'Alex Chen'
+            },
+            {
+                id: 'notebooklm-guide',
+                title: 'NotebookLM: Turn Any PDF Into a Podcast',
+                excerpt: 'Google\'s viral AI tool can transform your documents into engaging audio content. Here\'s how to master it...',
+                category: 'tutorials',
+                badge: 'How-To',
+                badgeClass: 'badge-new',
+                readTime: '6 min read',
+                date: 'Dec 28, 2024',
+                author: 'Alex Chen'
+            },
+            {
+                id: 'deepseek-r1-analysis',
+                title: 'DeepSeek R1: Open Source Reasoning Revolution',
+                excerpt: 'China\'s answer to OpenAI o1 is here and it\'s completely open source. Performance analysis and setup guide...',
+                category: 'reviews',
+                badge: 'Open Source',
+                badgeClass: 'badge-trending',
+                readTime: '9 min read',
+                date: 'Dec 25, 2024',
+                author: 'Alex Chen'
+            },
+            {
+                id: 'v0-vercel-review',
+                title: 'v0 by Vercel: Text to React Components',
+                excerpt: 'Vercel\'s AI can generate production-ready React components from text. I built 10 components to test its limits...',
+                category: 'reviews',
+                badge: 'Tool Review',
+                badgeClass: 'badge-new',
+                readTime: '11 min read',
+                date: 'Dec 22, 2024',
+                author: 'Alex Chen'
+            },
+            {
+                id: 'ai-productivity-stack',
+                title: 'My $50/Month AI Productivity Stack',
+                excerpt: 'How I replaced $500/month in software with smart AI tool combinations. Complete breakdown and alternatives...',
+                category: 'budget',
+                badge: 'Money Saver',
+                badgeClass: 'badge-hot',
+                readTime: '13 min read',
+                date: 'Dec 20, 2024',
+                author: 'Alex Chen'
+            }
+        ];
+
+        let currentPage = 1;
+        const postsPerPage = 9;
+        let filteredPosts = [...blogPosts];
+        let currentCategory = 'all';
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderBlogPosts();
+            renderPagination();
+        });
+
+        // Scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('revealed');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('active');
+        }
+
+        // Blog post navigation
+        function openBlogPost(postId) {
+            window.location.href = `post.html?id=${postId}`;
+        }
+
+        // Newsletter signup
+        function handleNewsletterSignup(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('input[type="email"]').value;
+            
+            alert(`Thank you for subscribing with ${email}! You'll receive our weekly AI digest soon.`);
+            event.target.reset();
+        }
+
+        // Filter posts by category
+        function filterByCategory(category) {
+            currentCategory = category;
+            currentPage = 1;
+            
+            // Update active filter tag
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Filter posts
+            if (category === 'all') {
+                filteredPosts = [...blogPosts];
+            } else {
+                filteredPosts = blogPosts.filter(post => post.category === category);
+            }
+            
+            renderBlogPosts();
+            renderPagination();
+        }
+
+        // Search posts
+        function filterPosts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            currentPage = 1;
+            
+            if (currentCategory === 'all') {
+                filteredPosts = blogPosts.filter(post => 
+                    post.title.toLowerCase().includes(searchTerm) ||
+                    post.excerpt.toLowerCase().includes(searchTerm)
+                );
+            } else {
+                filteredPosts = blogPosts.filter(post => 
+                    post.category === currentCategory &&
+                    (post.title.toLowerCase().includes(searchTerm) ||
+                     post.excerpt.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            renderBlogPosts();
+            renderPagination();
+        }
+
+        // Render blog posts
+        function renderBlogPosts() {
+            const blogGrid = document.getElementById('blogGrid');
+            const startIndex = (currentPage - 1) * postsPerPage;
+            const endIndex = startIndex + postsPerPage;
+            const postsToShow = filteredPosts.slice(startIndex, endIndex);
+            
+            blogGrid.innerHTML = postsToShow.map(post => `
+                <article class="glass-card p-6 blog-card scroll-reveal" onclick="openBlogPost('${post.id}')">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="${post.badgeClass}">${post.badge}</div>
+                        <span class="text-sm text-gray-400">${post.readTime}</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 hover:text-green-400 transition-colors">
+                        ${post.title}
+                    </h3>
+                    <p class="text-gray-300 mb-4">
+                        ${post.excerpt}
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-r from-green-400 to-blue-500 flex items-center justify-center">
+                                <span class="text-xs font-bold">AC</span>
+                            </div>
+                            <div>
+                                <div class="text-sm font-semibold">${post.author}</div>
+                                <div class="text-xs text-gray-400">${post.date}</div>
+                            </div>
+                        </div>
+                        <div class="text-green-400">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
+                </article>
+            `).join('');
+
+            // Re-observe new elements for scroll reveal
+            document.querySelectorAll('.scroll-reveal').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Render pagination
+        function renderPagination() {
+            const pagination = document.getElementById('pagination');
+            const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+            
+            if (totalPages <= 1) {
+                pagination.innerHTML = '';
+                return;
+            }
+            
+            let paginationHTML = '';
+            
+            // Previous button
+            paginationHTML += `
+                <button onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}>
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            `;
+            
+            // Page numbers
+            for (let i = 1; i <= totalPages; i++) {
+                if (i === currentPage) {
+                    paginationHTML += `<button class="active">${i}</button>`;
+                } else if (i === 1 || i === totalPages || (i >= currentPage - 1 && i <= currentPage + 1)) {
+                    paginationHTML += `<button onclick="changePage(${i})">${i}</button>`;
+                } else if (i === currentPage - 2 || i === currentPage + 2) {
+                    paginationHTML += `<span>...</span>`;
+                }
+            }
+            
+            // Next button
+            paginationHTML += `
+                <button onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            `;
+            
+            pagination.innerHTML = paginationHTML;
+        }
+
+        // Change page
+        function changePage(page) {
+            const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
+            if (page < 1 || page > totalPages) return;
+            
+            currentPage = page;
+            renderBlogPosts();
+            renderPagination();
+            
+            // Scroll to top of blog grid
+            document.getElementById('blogGrid').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(10, 10, 15, 0.95)';
+                navbar.style.backdropFilter = 'blur(20px)';
+            } else {
+                navbar.style.background = 'rgba(10, 10, 15, 0.8)';
+                navbar.style.backdropFilter = 'blur(20px)';
+            }
+        });
+    </script>
+</body>
+</html>
+
