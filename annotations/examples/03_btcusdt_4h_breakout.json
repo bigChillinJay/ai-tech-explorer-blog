@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "chart": { "symbol": "BTCUSDT", "interval": "4h", "exchange": "BINANCE", "timezone": "UTC" },
+  "meta": { "author": "sample", "notes": "Falling channel -> breakout idea toward prior range high." },
+  "tradeIdea": { "bias": "long", "setup": "Channel breakout", "confidence": 0.6 },
+  "layers": [
+    { "type": "channel", "label": "Falling channel", "data": { "x1": "2025-07-20T00:00:00Z", "y1": 123500, "x2": "2025-08-07T00:00:00Z", "y2": 116500 }, "style": { "color": "#3fa7d6", "width": 2 } },
+    { "type": "hline", "label": "previous ATH", "data": { "price": 118000 }, "style": { "dash": "dash", "color": "#6d86a6" } },
+    { "type": "box", "label": "Range consolidation", "data": { "x1": "2025-07-22T00:00:00Z", "x2": "2025-08-05T00:00:00Z", "y1": 114500, "y2": 121500 }, "style": { "fill": "#9be7c6", "opacity": 0.15 } },
+    { "type": "arrow", "label": "Breakout path", "data": { "x1": "2025-08-07T06:00:00Z", "y1": 116800, "x2": "2025-08-15T12:00:00Z", "y2": 124500 }, "style": { "color": "#4caf50", "width": 2 } }
+  ]
+}
+

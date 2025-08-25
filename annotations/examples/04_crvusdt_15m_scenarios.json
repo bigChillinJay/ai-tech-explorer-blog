@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "chart": { "symbol": "CRVUSDT", "interval": "15m", "exchange": "BINANCE", "timezone": "UTC" },
+  "meta": { "author": "sample", "notes": "Bullish and bearish case with supply zone and inefficiency." },
+  "tradeIdea": { "bias": "neutral", "setup": "Scenario planning" },
+  "layers": [
+    { "type": "box", "label": "Local supply", "data": { "x1": "2025-07-27T12:00:00Z", "x2": "2025-07-29T12:00:00Z", "y1": 1.00, "y2": 1.16 }, "style": { "fill": "#ff6b6b", "opacity": 0.22 } },
+    { "type": "box", "label": "Inefficiency", "data": { "x1": "2025-07-21T00:00:00Z", "x2": "2025-07-26T12:00:00Z", "y1": 0.88, "y2": 0.98 }, "style": { "fill": "#7db3ff", "opacity": 0.18 } },
+    { "type": "path", "label": "Bullish path", "data": { "points": [
+        { "time": "2025-07-29T03:00:00Z", "price": 0.98 },
+        { "time": "2025-07-29T10:00:00Z", "price": 1.02 },
+        { "time": "2025-07-30T06:00:00Z", "price": 1.08 },
+        { "time": "2025-07-31T12:00:00Z", "price": 1.12 }
+      ] }, "style": { "color": "#3ddc97", "width": 2 } },
+    { "type": "path", "label": "Bearish path", "data": { "points": [
+        { "time": "2025-07-29T03:00:00Z", "price": 1.02 },
+        { "time": "2025-07-29T12:00:00Z", "price": 0.99 },
+        { "time": "2025-07-30T00:00:00Z", "price": 0.93 },
+        { "time": "2025-07-31T00:00:00Z", "price": 0.90 }
+      ] }, "style": { "color": "#ff7f7f", "width": 2 } }
+  ]
+}
+
