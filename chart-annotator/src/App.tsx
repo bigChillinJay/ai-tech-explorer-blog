@@ -28,6 +28,8 @@ function App() {
   const [confidence, setConfidence] = useState<string>('70')
   const [alternate, setAlternate] = useState<string>('If price closes under SL → switch bias')
 
+  const [uiScale, setUiScale] = useState<number>(1)
+
   const createdObjectsRef = useRef<{
     entry?: Rect & { label?: Text }
     sl?: Line & { label?: Text }
@@ -57,6 +59,9 @@ function App() {
       const height = Math.round(width * 16 / 9)
       fabricRef.current.setWidth(width)
       fabricRef.current.setHeight(height)
+      // baseline ~ 420px width phones
+      const scale = Math.max(0.85, Math.min(1.6, width / 420))
+      setUiScale(scale)
       fabricRef.current.renderAll()
     }
     handleResize()
@@ -109,7 +114,7 @@ function App() {
 
   useEffect(() => {
     placeBiasArrow()
-  }, [bias])
+  }, [bias, uiScale])
 
   const loadImageToCanvas = (file: File) => {
     const reader = new FileReader()
@@ -146,21 +151,21 @@ function App() {
     const c = fabricRef.current
     if (!c) return
     const rect = new Rect({
-      left: x - 80,
-      top: y - 20,
-      width: 160,
-      height: 40,
+      left: x - (80 * uiScale),
+      top: y - (20 * uiScale),
+      width: 160 * uiScale,
+      height: 40 * uiScale,
       fill: 'rgba(0, 180, 90, 0.35)',
       stroke: 'rgba(0, 180, 90, 1)',
-      strokeWidth: 3,
-      rx: 6,
-      ry: 6,
+      strokeWidth: 3 * uiScale,
+      rx: 6 * uiScale,
+      ry: 6 * uiScale,
     })
     const label = new Text(labelText('ENTRY', entryMin, entryMax), {
       left: x,
       top: y,
       fontFamily: 'system-ui, -apple-system, Segoe UI, Roboto, Arial',
-      fontSize: 22,
+      fontSize: 22 * uiScale,
       fill: '#d7ffe5',
       fontWeight: 'bold',
       originX: 'center',
@@ -178,15 +183,15 @@ function App() {
     if (!c) return
     const line = new Line([0, y, (c.getWidth() || 0), y], {
       stroke: '#ff3b30',
-      strokeWidth: 4,
-      strokeDashArray: [10, 8],
+      strokeWidth: 4 * uiScale,
+      strokeDashArray: [10 * uiScale, 8 * uiScale],
       selectable: true,
     })
     const label = new Text(labelText('SL', stopLoss), {
-      left: 8,
-      top: y - 18,
+      left: 8 * uiScale,
+      top: y - (18 * uiScale),
       fontFamily: 'system-ui, -apple-system, Segoe UI, Roboto, Arial',
-      fontSize: 22,
+      fontSize: 22 * uiScale,
       fill: '#ffb3af',
       fontWeight: 'bold',
       originX: 'left',
@@ -207,18 +212,18 @@ function App() {
     const price = { tp1, tp2, tp3 }[which]
     const label = new Text(labelText(text, price), {
       fontFamily: 'system-ui, -apple-system, Segoe UI, Roboto, Arial',
-      fontSize: 22,
+      fontSize: 22 * uiScale,
       fill: '#cde6ff',
       fontWeight: 'bold',
       originX: 'left',
       originY: 'center',
     })
     const tag = new Rect({
-      width: (label.width || 0) + 16,
-      height: (label.height || 0) + 10,
+      width: (label.width || 0) + (16 * uiScale),
+      height: (label.height || 0) + (10 * uiScale),
       fill: 'rgba(0, 122, 255, 0.85)',
-      rx: 6,
-      ry: 6,
+      rx: 6 * uiScale,
+      ry: 6 * uiScale,
       originX: 'left',
       originY: 'center',
     })
@@ -227,7 +232,7 @@ function App() {
       top: y,
       selectable: true,
     })
-    label.set({ left: 8 })
+    label.set({ left: 8 * uiScale })
     c.add(group)
     ;(createdObjectsRef.current as any)[which] = group
     c.setActiveObject(group)
@@ -240,21 +245,21 @@ function App() {
     const color = kind === 'OB' ? 'rgba(255,165,0,0.2)' : 'rgba(255, 255, 0, 0.15)'
     const stroke = kind === 'OB' ? 'rgba(255,165,0,0.9)' : 'rgba(255, 255, 0, 0.85)'
     const rect = new Rect({
-      left: x - 90,
-      top: y - 24,
-      width: 180,
-      height: 48,
+      left: x - (90 * uiScale),
+      top: y - (24 * uiScale),
+      width: 180 * uiScale,
+      height: 48 * uiScale,
       fill: color,
       stroke,
-      strokeWidth: 2,
-      rx: 6,
-      ry: 6,
+      strokeWidth: 2 * uiScale,
+      rx: 6 * uiScale,
+      ry: 6 * uiScale,
     })
     const label = new Text(kind, {
       left: x,
       top: y,
       fontFamily: 'system-ui, -apple-system, Segoe UI, Roboto, Arial',
-      fontSize: 18,
+      fontSize: 18 * uiScale,
       fill: '#ffffff',
       fontWeight: 'bold',
       originX: 'center',
@@ -274,7 +279,7 @@ function App() {
       left: centerX,
       top: centerY,
       fontFamily: 'system-ui, -apple-system, Segoe UI, Roboto, Arial',
-      fontSize: 80,
+      fontSize: 80 * uiScale,
       fill: bias === 'Bullish' ? '#28c76f' : '#ff3b30',
       fontWeight: '900',
       originX: 'center',

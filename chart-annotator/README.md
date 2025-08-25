@@ -1,69 +1,33 @@
-# React + TypeScript + Vite
+# Pro Chart Annotator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Mobile-first web app to upload TradingView screenshots, add professional, minimal trade annotations, and export a compressed PNG plus a clean bullet summary.
 
-Currently, two official plugins are available:
+## Features
+- Image upload (PNG/JPG)
+- Touch-friendly annotations:
+  - ENTRY zone (green) with label
+  - SL dashed red line with label
+  - TP1–TP3 blue flags with prices
+  - Bias arrow (↑ Bullish / ↓ Bearish)
+  - Optional OB/FVG zones
+- Inputs for symbol, timeframe, risk %, leverage
+- Auto-generated trade summary with per-TP RR
+- One-tap: Export PNG, Copy/Download Summary
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Quick start
+```bash
+npm i
+npm run dev
 ```
+Open the URL shown (default: `http://localhost:5173`).
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## How to use
+1) Upload a chart image.
+2) Choose a tool then tap on the canvas to place it.
+3) Fill the right-side fields (levels, bias, risk, etc.).
+4) Export PNG and Copy/Download Summary.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Notes
+- Annotation sizes auto-scale for mobile readability.
+- Fabric v6 ESM is used under the hood.
+- For deployment, push to any static host (Vercel, Netlify, GitHub Pages).
