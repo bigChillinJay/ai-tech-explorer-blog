@@ -14,6 +14,11 @@ function App() {
   const [activeTool, setActiveTool] = useState<Tool>('select')
   const [bias, setBias] = useState<Bias>('Bullish')
 
+  const [symbol, setSymbol] = useState<string>('')
+  const [timeframe, setTimeframe] = useState<string>('')
+  const [riskPct, setRiskPct] = useState<string>('1')
+  const [leverage, setLeverage] = useState<string>('')
+
   const [entryMin, setEntryMin] = useState<string>('')
   const [entryMax, setEntryMax] = useState<string>('')
   const [stopLoss, setStopLoss] = useState<string>('')
@@ -326,6 +331,51 @@ function App() {
     placeBiasArrow()
   }
 
+  const computeRR = (entryPrice: number, slPrice: number, tpPrice: number) => {
+    const risk = Math.abs(entryPrice - slPrice)
+    if (!isFinite(risk) || risk <= 0) return undefined
+    const reward = bias === 'Bullish' ? (tpPrice - entryPrice) : (entryPrice - tpPrice)
+    return reward / risk
+  }
+
+  const buildSummary = () => {
+    const entryA = parseFloat(entryMin)
+    const entryB = parseFloat(entryMax)
+    const entryPrice = isFinite(entryA) && isFinite(entryB) ? (entryA + entryB) / 2 : (isFinite(entryA) ? entryA : (isFinite(entryB) ? entryB : NaN))
+    const sl = parseFloat(stopLoss)
+    const tp1n = parseFloat(tp1)
+    const tp2n = parseFloat(tp2)
+    const tp3n = parseFloat(tp3)
+
+    const rr1 = isFinite(entryPrice) && isFinite(sl) && isFinite(tp1n) ? computeRR(entryPrice, sl, tp1n) : undefined
+    const rr2 = isFinite(entryPrice) && isFinite(sl) && isFinite(tp2n) ? computeRR(entryPrice, sl, tp2n) : undefined
+    const rr3 = isFinite(entryPrice) && isFinite(sl) && isFinite(tp3n) ? computeRR(entryPrice, sl, tp3n) : undefined
+
+    const lines: string[] = []
+    if (symbol) lines.push(`Symbol: ${symbol}`)
+    if (timeframe) lines.push(`Timeframe: ${timeframe}`)
+    if (leverage) lines.push(`Leverage: ${leverage}x`)
+    if (riskPct) lines.push(`Risk: ${riskPct}%`)
+
+    lines.push(`Bias: ${bias}`)
+    lines.push(`Entry: ${entryMin || '?'}${entryMax ? ' - ' + entryMax : ''}`)
+    lines.push(`Stop Loss: ${stopLoss || '?'}`)
+    lines.push('Take Profit')
+    lines.push(`1: ${tp1 || '?'}${rr1 ? `  (RR ~ ${rr1.toFixed(2)}R)` : ''}`)
+    lines.push('Take Profit')
+    lines.push(`2: ${tp2 || '?'}${rr2 ? `  (RR ~ ${rr2.toFixed(2)}R)` : ''}`)
+    lines.push('Take Profit')
+    lines.push(`3: ${tp3 || '?'}${rr3 ? `  (RR ~ ${rr3.toFixed(2)}R)` : ''}`)
+    lines.push(`Invalidation: ${stopLoss ? 'Below ' + stopLoss : '?'}`)
+    lines.push(`Confidence: ${confidence || '?'}%`)
+    lines.push(`Alternate: ${alternate}`)
+
+    lines.push('')
+    lines.push('Explanation: Minimal pro annotations — ENTRY zone (green), SL red dashed under invalidation, TP flags (blue), and a single bias arrow. Optional OB/FVG zone highlights key supply/demand or inefficiency areas. Levels are sized and labeled for mobile readability.')
+
+    return lines.join('\n')
+  }
+
   const exportPng = async () => {
     const c = fabricRef.current
     if (!c) return
@@ -346,23 +396,20 @@ function App() {
   }
 
   const copySummary = async () => {
-    const lines = [
-      `Bias: ${bias}`,
-      `Entry: ${entryMin || '?'}${entryMax ? ' - ' + entryMax : ''}`,
-      `Stop Loss: ${stopLoss || '?'}`,
-      'Take Profit',
-      `1: ${tp1 || '?'}`,
-      'Take Profit',
-      `2: ${tp2 || '?'}`,
-      'Take Profit',
-      `3: ${tp3 || '?'}`,
-      `Invalidation: ${stopLoss ? 'Below ' + stopLoss : '?'}`,
-      `Confidence: ${confidence || '?'}%`,
-      `Alternate: ${alternate}`,
-    ]
-    const summary = lines.join('\n')
+    const summary = buildSummary()
     await navigator.clipboard.writeText(summary)
     alert('Summary copied to clipboard')
+  }
+
+  const downloadSummary = () => {
+    const summary = buildSummary()
+    const blob = new Blob([summary], { type: 'text/plain;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.href = url
+    a.download = 'trade_summary.txt'
+    a.click()
+    URL.revokeObjectURL(url)
   }
 
   return (
@@ -443,6 +490,16 @@ function App() {
 
           <div className="form">
             <div className="form-row">
+              <label>Symbol</label>
+              <input placeholder="e.g. BTCUSDT" value={symbol} onChange={(e) => setSymbol(e.target.value)} />
+              <input placeholder="Timeframe (e.g. 15m)" value={timeframe} onChange={(e) => setTimeframe(e.target.value)} />
+            </div>
+            <div className="form-row">
+              <label>Risk</label>
+              <input inputMode="decimal" placeholder="1" value={riskPct} onChange={(e) => setRiskPct(e.target.value)} />
+              <input inputMode="numeric" placeholder="Leverage (e.g. 5)" value={leverage} onChange={(e) => setLeverage(e.target.value)} />
+            </div>
+            <div className="form-row">
               <label>Entry</label>
               <input inputMode="decimal" placeholder="min" value={entryMin} onChange={(e) => setEntryMin(e.target.value)} />
               <input inputMode="decimal" placeholder="max" value={entryMax} onChange={(e) => setEntryMax(e.target.value)} />
@@ -464,7 +521,7 @@ function App() {
               <input inputMode="decimal" placeholder="price" value={tp3} onChange={(e) => setTp3(e.target.value)} />
             </div>
             <div className="form-row">
-              <label>Confidence %</label>
+              <label>Conf %</label>
               <input inputMode="numeric" placeholder="70" value={confidence} onChange={(e) => setConfidence(e.target.value)} />
             </div>
             <div className="form-row">
@@ -473,6 +530,7 @@ function App() {
             </div>
             <div className="form-actions">
               <button className="button" onClick={copySummary}>Copy Summary</button>
+              <button className="button" onClick={downloadSummary}>Download Summary</button>
             </div>
           </div>
         </div>
