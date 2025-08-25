@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "chart": { "symbol": "TIAUSDT.P", "interval": "15m", "exchange": "KCEX", "timezone": "UTC" },
+  "meta": { "author": "sample", "notes": "Break and retest of 0.718 fib; plan to long on reclaim." },
+  "tradeIdea": { "bias": "long", "setup": ".718 reclaim", "entry": 1.705, "stop": 1.662, "targets": [1.786, 1.831, 1.90], "confidence": 0.55 },
+  "layers": [
+    { "type": "fibonacci", "label": "Swing retracement", "data": {
+        "x1": "2025-08-21T00:00:00Z", "y1": 1.30,
+        "x2": "2025-08-23T12:00:00Z", "y2": 1.90,
+        "levels": [
+          { "level": 0.236 }, { "level": 0.382 }, { "level": 0.5 }, { "level": 0.618 }, { "level": 0.718 }, { "level": 0.786 }
+        ]
+      }, "style": { "color": "#ff7f50" }
+    },
+    { "type": "hline", "label": "0.618 (1.7138)", "data": { "price": 1.714 }, "style": { "dash": "dot", "color": "#6ad3ff" } },
+    { "type": "hline", "label": "0.786 (1.662)", "data": { "price": 1.662 }, "style": { "dash": "dot", "color": "#6ad3ff" } },
+    { "type": "text", "label": "Long after break & retest of .718", "data": { "x1": "2025-08-25T06:50:00Z", "y1": 1.70 } },
+    { "type": "arrow", "label": "expected path", "data": { "x1": "2025-08-25T07:00:00Z", "y1": 1.70, "x2": "2025-08-27T12:00:00Z", "y2": 1.86 }, "style": { "color": "#c0c0c0", "width": 2 } }
+  ]
+}
+

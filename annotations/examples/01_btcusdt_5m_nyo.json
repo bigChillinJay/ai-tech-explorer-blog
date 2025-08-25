@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "chart": { "symbol": "BTCUSDT", "interval": "5m", "exchange": "BINANCE", "timezone": "UTC" },
+  "meta": { "author": "sample", "notes": "NYO impulse from daily low with RR box and volume profile." },
+  "tradeIdea": {
+    "bias": "long",
+    "setup": "NYO sweep of daily low -> impulse",
+    "entry": 113200,
+    "stop": 112565,
+    "targets": [114660],
+    "rr": 2.3,
+    "confidence": 0.6
+  },
+  "layers": [
+    { "type": "sessionDivider", "label": "Daily open", "data": { "time": "2025-08-20T00:00:00Z" }, "style": { "color": "#e8e8e8", "dash": "solid", "width": 2 } },
+    { "type": "sessionDivider", "label": "NYO", "data": { "time": "2025-08-20T14:30:00Z" }, "style": { "color": "#ffffff", "dash": "solid", "width": 2 } },
+    { "type": "hline", "label": "daily low", "data": { "price": 112950 }, "style": { "color": "#4aa3ff", "dash": "dash" } },
+    { "type": "volumeProfile", "label": "Asia range", "data": { "from": "2025-08-20T01:00:00Z", "to": "2025-08-20T07:00:00Z", "rows": 48 }, "style": { "opacity": 0.5 } },
+    { "type": "rrBox", "label": "Long scalp", "data": { "side": "long", "entry": 113200, "stop": 112565, "target": 114660 }, "style": { "fill": "#2e6ef7", "opacity": 0.25 } },
+    { "type": "text", "label": "Context", "data": { "x1": "2025-08-20T14:35:00Z", "y1": 113250 }, "style": { "color": "#bfc7d5" } }
+  ]
+}
+
